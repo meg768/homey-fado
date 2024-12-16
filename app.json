@@ -10,6 +10,7 @@
   "name": {
     "en": "Homey Fado"
   },
+  "brandColor": "FF0000",
   "description": {
     "en": "Adds support for my Fado"
   },

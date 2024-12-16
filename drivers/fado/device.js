@@ -22,7 +22,7 @@ class MyDevice extends Device {
 		await this.homey.app.unregisterDevice(this);
 	}
 
-
+ 
 
 }
 
