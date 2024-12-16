@@ -1,0 +1,210 @@
+{
+    "actions": [
+        {
+            "id": "blink-color",
+
+            "title": {
+                "en": "Blinka med färgkod"
+            },
+            "titleFormatted": {
+                "en": "Blinka [[iterations]] gånger med färg [[color]] med ett intervall på [[interval]] sekund(er)"
+            },
+            "args": [
+                {
+                    "type": "number",
+                    "name": "iterations",
+                    "placeholder": {
+                        "en": "antal"
+                    }
+                },
+                {
+                    "type": "number",
+                    "name": "interval",
+                    "placeholder": {
+                        "en": "intervall"
+                    }
+                },
+                {
+                    "type": "text",
+                    "name": "color",
+                    "placeholder": {
+                        "en": "färg"
+                    }
+                }
+            ]
+        },
+        {
+            "id": "blink-color-name",
+            "title": {
+                "en": "Blinka med färgkod"
+            },
+            "titleFormatted": {
+                "en": "Blinka [[iterations]] gånger med färgkod [[color]] med ett intervall på [[interval]] sekund(er)"
+            },
+            "args": [
+                {
+                    "type": "number",
+                    "name": "iterations",
+                    "placeholder": {
+                        "en": "antal"
+                    }
+                },
+                {
+                    "type": "number",
+                    "name": "interval",
+                    "placeholder": {
+                        "en": "intervall"
+                    }
+                },
+                {
+                    "type": "text",
+                    "name": "color",
+                    "placeholder": {
+                        "en": "färgkod"
+                    }
+                }
+            ]
+        },
+        {
+            "id": "pulse-color-name",
+            "title": {
+                "en": "Pulsera med färgkod"
+            },
+            "titleFormatted": {
+                "en": "Pulsera [[iterations]] gånger med färgkod [[color]] med ett intervall på [[interval]] sekund(er)"
+            },
+            "args": [
+                {
+                    "type": "number",
+                    "name": "iterations",
+                    "placeholder": {
+                        "en": "antal"
+                    }
+                },
+                {
+                    "type": "number",
+                    "name": "interval",
+                    "placeholder": {
+                        "en": "intervall"
+                    }
+                },
+                {
+                    "type": "text",
+                    "name": "color",
+                    "placeholder": {
+                        "en": "färgkod"
+                    }
+                }
+            ]
+        },
+        {
+            "id": "pulse-color",
+            "title": {
+                "en": "Pulsera"
+            },
+            "titleFormatted": {
+                "en": "Pulsera [[iterations]] gånger med färg [[color]] med ett intervall på [[interval]] sekund(er)"
+            },
+            "args": [
+                {
+                    "type": "number",
+                    "name": "iterations",
+                    "placeholder": {
+                        "en": "antal"
+                    }
+                },
+                {
+                    "type": "number",
+                    "name": "interval",
+                    "placeholder": {
+                        "en": "intervall"
+                    }
+                },
+                {
+                    "type": "color",
+                    "name": "color",
+                    "placeholder": {
+                        "en": "färg"
+                    }
+                }
+            ]
+        },
+        {
+            "id": "color-hsl",
+            "title": {
+                "en": "Sätt färg med HSL"
+            },
+            "titleFormatted": {
+                "en": "Sätt färg till nyans [[hue]], mättnad [[saturation]] och ljusstyrka [[lightness]]"
+            },
+            "args": [
+                {
+                    "type": "range",
+                    "name": "hue",
+                    "min": 0,
+                    "max": 360,
+                    "label": "°",
+                    "title": {
+                        "en": "nyans"
+                    }
+                },
+                {
+                    "type": "range",
+                    "name": "saturation",
+                    "min": 0,
+                    "max": 100,
+                    "label": "%",
+                    "title": {
+                        "en": "mättnad"
+                    }
+                },
+                {
+                    "type": "range",
+                    "name": "lightness",
+                    "min": 0,
+                    "max": 100,
+                    "label": "%",
+                    "title": {
+                        "en": "ljusstyrka"
+                    }
+                }
+            ]
+        },
+        {
+            "id": "color-name",
+            "title": {
+                "en": "Sätt färgkod"
+            },
+            "titleFormatted": {
+                "en": "Sätt färgkod till [[color]]"
+            },
+            "args": [
+                {
+                    "type": "text",
+                    "name": "color",
+                    "placeholder": {
+                        "en": "färgkod"
+                    }
+                }
+            ]
+        },
+        {
+            "id": "color",
+            "title": {
+                "en": "Sätt färg"
+            },
+            "titleFormatted": {
+                "en": "Sätt färg till [[color]]"
+            },
+            "args": [
+                {
+                    "type": "color",
+                    "name": "color",
+                    "placeholder": {
+                        "en": "färg"
+                    }
+                }
+            ]
+        }
+    ]
+}

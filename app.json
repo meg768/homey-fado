@@ -1,0 +1,305 @@
+{
+  "_comment": "This file is generated. Please edit .homeycompose/app.json instead.",
+  "id": "se.egelberg.homey-fado",
+  "version": "1.0.0",
+  "compatibility": ">=5.0.0",
+  "sdk": 3,
+  "platforms": [
+    "local"
+  ],
+  "name": {
+    "en": "Homey Fado"
+  },
+  "description": {
+    "en": "Adds support for my Fado"
+  },
+  "category": [
+    "tools"
+  ],
+  "permissions": [],
+  "images": {
+    "small": "/assets/images/small.png",
+    "large": "/assets/images/large.png",
+    "xlarge": "/assets/images/xlarge.png"
+  },
+  "author": {
+    "name": "Magnus Egelberg",
+    "email": "magnus.egelberg@gmail.com"
+  },
+  "flow": {
+    "actions": [
+      {
+        "id": "blink-color",
+        "title": {
+          "en": "Blinka med färgkod"
+        },
+        "titleFormatted": {
+          "en": "Blinka [[iterations]] gånger med färg [[color]] med ett intervall på [[interval]] sekund(er)"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=fado"
+          },
+          {
+            "type": "number",
+            "name": "iterations",
+            "placeholder": {
+              "en": "antal"
+            }
+          },
+          {
+            "type": "number",
+            "name": "interval",
+            "placeholder": {
+              "en": "intervall"
+            }
+          },
+          {
+            "type": "text",
+            "name": "color",
+            "placeholder": {
+              "en": "färg"
+            }
+          }
+        ]
+      },
+      {
+        "id": "blink-color-name",
+        "title": {
+          "en": "Blinka med färgkod"
+        },
+        "titleFormatted": {
+          "en": "Blinka [[iterations]] gånger med färgkod [[color]] med ett intervall på [[interval]] sekund(er)"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=fado"
+          },
+          {
+            "type": "number",
+            "name": "iterations",
+            "placeholder": {
+              "en": "antal"
+            }
+          },
+          {
+            "type": "number",
+            "name": "interval",
+            "placeholder": {
+              "en": "intervall"
+            }
+          },
+          {
+            "type": "text",
+            "name": "color",
+            "placeholder": {
+              "en": "färgkod"
+            }
+          }
+        ]
+      },
+      {
+        "id": "pulse-color-name",
+        "title": {
+          "en": "Pulsera med färgkod"
+        },
+        "titleFormatted": {
+          "en": "Pulsera [[iterations]] gånger med färgkod [[color]] med ett intervall på [[interval]] sekund(er)"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=fado"
+          },
+          {
+            "type": "number",
+            "name": "iterations",
+            "placeholder": {
+              "en": "antal"
+            }
+          },
+          {
+            "type": "number",
+            "name": "interval",
+            "placeholder": {
+              "en": "intervall"
+            }
+          },
+          {
+            "type": "text",
+            "name": "color",
+            "placeholder": {
+              "en": "färgkod"
+            }
+          }
+        ]
+      },
+      {
+        "id": "pulse-color",
+        "title": {
+          "en": "Pulsera"
+        },
+        "titleFormatted": {
+          "en": "Pulsera [[iterations]] gånger med färg [[color]] med ett intervall på [[interval]] sekund(er)"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=fado"
+          },
+          {
+            "type": "number",
+            "name": "iterations",
+            "placeholder": {
+              "en": "antal"
+            }
+          },
+          {
+            "type": "number",
+            "name": "interval",
+            "placeholder": {
+              "en": "intervall"
+            }
+          },
+          {
+            "type": "color",
+            "name": "color",
+            "placeholder": {
+              "en": "färg"
+            }
+          }
+        ]
+      },
+      {
+        "id": "color-hsl",
+        "title": {
+          "en": "Sätt färg med HSL"
+        },
+        "titleFormatted": {
+          "en": "Sätt färg till nyans [[hue]], mättnad [[saturation]] och ljusstyrka [[lightness]]"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=fado"
+          },
+          {
+            "type": "range",
+            "name": "hue",
+            "min": 0,
+            "max": 360,
+            "label": "°",
+            "title": {
+              "en": "nyans"
+            }
+          },
+          {
+            "type": "range",
+            "name": "saturation",
+            "min": 0,
+            "max": 100,
+            "label": "%",
+            "title": {
+              "en": "mättnad"
+            }
+          },
+          {
+            "type": "range",
+            "name": "lightness",
+            "min": 0,
+            "max": 100,
+            "label": "%",
+            "title": {
+              "en": "ljusstyrka"
+            }
+          }
+        ]
+      },
+      {
+        "id": "color-name",
+        "title": {
+          "en": "Sätt färgkod"
+        },
+        "titleFormatted": {
+          "en": "Sätt färgkod till [[color]]"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=fado"
+          },
+          {
+            "type": "text",
+            "name": "color",
+            "placeholder": {
+              "en": "färgkod"
+            }
+          }
+        ]
+      },
+      {
+        "id": "color",
+        "title": {
+          "en": "Sätt färg"
+        },
+        "titleFormatted": {
+          "en": "Sätt färg till [[color]]"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=fado"
+          },
+          {
+            "type": "color",
+            "name": "color",
+            "placeholder": {
+              "en": "färg"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "drivers": [
+    {
+      "name": {
+        "en": "Fado"
+      },
+      "class": "other",
+      "capabilities": [],
+      "platforms": [
+        "local"
+      ],
+      "connectivity": [],
+      "images": {
+        "small": "/drivers/fado/assets/images/small.png",
+        "large": "/drivers/fado/assets/images/large.png",
+        "xlarge": "/drivers/fado/assets/images/xlarge.png"
+      },
+      "pair": [
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "navigation": {
+            "next": "add_devices"
+          }
+        },
+        {
+          "id": "add_devices",
+          "template": "add_devices"
+        }
+      ],
+      "id": "fado"
+    }
+  ]
+}
