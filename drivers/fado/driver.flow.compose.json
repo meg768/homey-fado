@@ -4,7 +4,7 @@
             "id": "blink-color",
 
             "title": {
-                "en": "Blinka med färgkod"
+                "en": "Blinka med färg"
             },
             "titleFormatted": {
                 "en": "Blinka [[iterations]] gånger med färg [[color]] med ett intervall på [[interval]] sekund(er)"
@@ -25,10 +25,10 @@
                     }
                 },
                 {
-                    "type": "text",
+                    "type": "color",
                     "name": "color",
                     "placeholder": {
-                        "en": "färg"
+                        "en": "färgkod"
                     }
                 }
             ]
@@ -39,7 +39,7 @@
                 "en": "Blinka med färgkod"
             },
             "titleFormatted": {
-                "en": "Blinka [[iterations]] gånger med färgkod [[color]] med ett intervall på [[interval]] sekund(er)"
+                "en": "Blinka [[iterations]] gånger med färgkod '[[color]]' med ett intervall på [[interval]] sekund(er)"
             },
             "args": [
                 {
@@ -71,7 +71,7 @@
                 "en": "Pulsera med färgkod"
             },
             "titleFormatted": {
-                "en": "Pulsera [[iterations]] gånger med färgkod [[color]] med ett intervall på [[interval]] sekund(er)"
+                "en": "Pulsera [[iterations]] gånger med färgkod '[[color]]' med ett intervall på [[interval]] sekund(er)"
             },
             "args": [
                 {
@@ -176,7 +176,7 @@
                 "en": "Sätt färgkod"
             },
             "titleFormatted": {
-                "en": "Sätt färgkod till [[color]]"
+                "en": "Sätt färgkod till '[[color]]'"
             },
             "args": [
                 {

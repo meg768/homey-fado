@@ -2,8 +2,8 @@
     "name": {
         "en": "Fado"
     },
-    "class": "other",
-    "capabilities": [],
+    "class": "light",
+    "capabilities": ["onoff", "dim", "light_hue", "light_saturation"],
     "platforms": ["local"],
     "connectivity": [],
     "images": {

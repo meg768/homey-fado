@@ -1,88 +1,38 @@
 "use strict";
 
 const { Driver } = require("homey");
+const Color = require("color");
 
 class MyDriver extends Driver {
     async onInit() {
-        this.log("MyDriver has been initialized");
-
-        this.addAction(
-            "pulse-color",
-            async ({ device, color, interval, iterations }) => {
-                let payload = {};
-                payload.animation = "pulse";
-                payload.color = color;
-                payload.interval = interval * 1000;
-                payload.iterations = iterations;
-
-                await device.publish(payload);
-            }
-        );
-
-        this.addAction(
-            "pulse-color-name",
-            async ({ device, color, interval, iterations }) => {
-                let payload = {};
-                payload.animation = "pulse";
-                payload.color = color;
-                payload.interval = interval * 1000;
-                payload.iterations = iterations;
-
-                await device.publish(payload);
-            }
-        );
-
-        this.addAction(
-            "blink-color",
-            async ({ device, color, interval, iterations }) => {
-                let payload = {};
-                payload.animation = "pulse";
-                payload.color = color;
-                payload.interval = interval * 1000;
-                payload.iterations = iterations;
-
-                await device.publish(payload);
-            }
-        );
-
-        this.addAction(
-            "blink-color-name",
-            async ({ device, color, interval, iterations }) => {
-                let payload = {};
-                payload.animation = "pulse";
-                payload.color = color;
-                payload.interval = interval * 1000;
-                payload.iterations = iterations;
-
-                await device.publish(payload);
-            }
-        );
-
-        this.addAction("color", async ({ device, color }) => {
-            let payload = {};
-            payload.animation = "color";
-            payload.color = color;
-
-            await device.publish(payload);
+        this.addAction("pulse-color", async ({ device, color, interval, iterations }) => {
+            await device.pulse({ color, interval, iterations });
         });
 
-        this.addAction(
-            "color-hsl",
-            async ({ device, hue, saturation, lightness }) => {
-                let payload = {};
-                payload.animation = "color";
-                payload.color = `hsl(${hue}, ${saturation}%, ${lightness}%)`;
+        this.addAction("pulse-color-name", async ({ device, color, interval, iterations }) => {
+            await device.pulse({ color, interval, iterations });
+        });
 
-                await device.publish(payload);
-            }
-        );
+        this.addAction("blink-color", async ({ device, color, interval, iterations }) => {
+            await device.blink({ color, interval, iterations });
+        });
+
+        this.addAction("blink-color-name", async ({ device, color, interval, iterations }) => {
+            await device.blink({ color, interval, iterations });
+        });
+
+        this.addAction("color", async ({ device, color }) => {
+            let hsl = Color(color).hsl().array();
+            await device.setState({ onoff: true, light_hue: hsl[0] / 360, light_saturation: hsl[1] / 100, dim: hsl[2] / 100 });
+        });
+
+        this.addAction("color-hsl", async ({ device, hue, saturation, lightness }) => {
+            await device.setState({ onoff: true, light_hue: hue / 360, light_saturation: saturation / 100, dim: lightness / 100 });
+        });
 
         this.addAction("color-name", async ({ device, color }) => {
-            let payload = {};
-            payload.animation = "color";
-            payload.color = color;
-
-            await device.publish(payload);
+            let hsl = Color(color).hsl().array();
+            await device.setState({ onoff: true, light_hue: hsl[0] / 360, light_saturation: hsl[1] / 100, dim: hsl[2] / 100 });
         });
     }
 
