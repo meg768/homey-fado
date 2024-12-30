@@ -21,12 +21,6 @@ class MyDevice extends Device {
         });
 
         await this.setState({ onoff: false, dim: this.lightness, light_hue: this.hue, light_saturation: this.saturation });
-/*
-        this.setCapabilityValue("onoff", this.onoff);
-        this.setCapabilityValue("dim", this.lightness);
-        this.setCapabilityValue("light_hue", this.hue);
-        this.setCapabilityValue("light_saturation", this.saturation);
-        */
     }
 
     getCurrentColor() {
@@ -98,10 +92,10 @@ class MyDevice extends Device {
 
         await this.publish(payload);
 
-        this.setCapabilityValue("onoff", this.onoff);
-        this.setCapabilityValue("dim", this.lightness);
-        this.setCapabilityValue("light_hue", this.hue);
-        this.setCapabilityValue("light_saturation", this.saturation);
+        await this.setCapabilityValue("onoff", this.onoff);
+        await this.setCapabilityValue("dim", this.lightness);
+        await this.setCapabilityValue("light_hue", this.hue);
+        await this.setCapabilityValue("light_saturation", this.saturation);
 
     }
 
