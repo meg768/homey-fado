@@ -208,9 +208,11 @@
             "name": "saturation",
             "min": 0,
             "max": 100,
+            "step": 1,
+            "decimals": 0,
             "label": "%",
             "title": {
-              "en": "mättnad"
+              "en": "Mättnad"
             }
           },
           {
@@ -219,8 +221,10 @@
             "min": 0,
             "max": 100,
             "label": "%",
+            "step": 1,
+            "decimals": 0,
             "title": {
-              "en": "ljusstyrka"
+              "en": "Ljusstyrka"
             }
           }
         ]

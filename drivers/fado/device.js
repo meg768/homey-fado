@@ -21,11 +21,12 @@ class MyDevice extends Device {
         });
 
         await this.setState({ onoff: false, dim: this.lightness, light_hue: this.hue, light_saturation: this.saturation });
-
+/*
         this.setCapabilityValue("onoff", this.onoff);
         this.setCapabilityValue("dim", this.lightness);
         this.setCapabilityValue("light_hue", this.hue);
         this.setCapabilityValue("light_saturation", this.saturation);
+        */
     }
 
     getCurrentColor() {
@@ -88,6 +89,7 @@ class MyDevice extends Device {
             this.saturation = light_saturation;
         }
 
+
         let payload = {};
         payload.animation = "color";
         payload.priority = "!";
@@ -95,10 +97,15 @@ class MyDevice extends Device {
         payload.duration = -1;
 
         await this.publish(payload);
+
+        this.setCapabilityValue("onoff", this.onoff);
+        this.setCapabilityValue("dim", this.lightness);
+        this.setCapabilityValue("light_hue", this.hue);
+        this.setCapabilityValue("light_saturation", this.saturation);
+
     }
 
     async publish(payload) {
-        this.log(payload);
         await this.mqtt.publish(`${this.getSetting("mqtt").topic}`, JSON.stringify(payload), { retain: true });
     }
 
