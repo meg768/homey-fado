@@ -23,7 +23,7 @@ class MyDevice extends Device {
         await this.setState({ onoff: false, dim: this.lightness, light_hue: this.hue, light_saturation: this.saturation });
 
         this.setCapabilityValue("onoff", this.onoff);
-        this.setCapabilityValue("dim", this.dim);
+        this.setCapabilityValue("dim", this.lightness);
         this.setCapabilityValue("light_hue", this.hue);
         this.setCapabilityValue("light_saturation", this.saturation);
     }
