@@ -18,11 +18,11 @@ class MyDevice extends Device {
 
         this.registerMultipleCapabilityListener(capabilities, async (args) => {
             await this.setState(args);
+            await this.setCapabilityValue("onoff", this.onoff);
+            await this.setCapabilityValue("dim", this.lightness);
+            await this.setCapabilityValue("light_hue", this.hue);
+            await this.setCapabilityValue("light_saturation", this.saturation);
         });
-        await this.setCapabilityValue("onoff", this.onoff);
-        await this.setCapabilityValue("dim", this.lightness);
-        await this.setCapabilityValue("light_hue", this.hue);
-        await this.setCapabilityValue("light_saturation", this.saturation);
 
         await this.setState({ onoff: false, dim: this.lightness, light_hue: this.hue, light_saturation: this.saturation });
     }
@@ -93,7 +93,6 @@ class MyDevice extends Device {
         payload.priority = "!";
         payload.color = this.getCurrentColor();
         payload.duration = -1;
-
 
         await this.publish(payload);
 
