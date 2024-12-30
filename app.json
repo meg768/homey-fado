@@ -196,9 +196,11 @@
             "name": "hue",
             "min": 0,
             "max": 360,
+            "step": 1,
+            "decimals": 0,
             "label": "°",
             "title": {
-              "en": "nyans"
+              "en": "Nyans"
             }
           },
           {
