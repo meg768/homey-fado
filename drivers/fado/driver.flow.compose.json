@@ -28,7 +28,7 @@
                     "type": "color",
                     "name": "color",
                     "placeholder": {
-                        "en": "färgkod"
+                        "en": "färg"
                     }
                 }
             ]
