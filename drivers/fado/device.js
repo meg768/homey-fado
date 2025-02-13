@@ -65,8 +65,14 @@ class MyDevice extends Device {
         await this.publish(payload);
     }
 
-    async setState({ onoff, dim, light_hue, light_saturation }) {
+    async setState(args) {
+        let { onoff, dim, light_hue, light_saturation } = args;
 
+        this.debug(`Setting state ${JSON.stringify(args)}`);
+
+        if (dim != undefined) {
+            onoff = dim != 0;
+        }
 
         if (dim != undefined) {
             this.lightness = dim;
@@ -82,12 +88,13 @@ class MyDevice extends Device {
 
         if (onoff != undefined) {
             this.onoff = onoff;
-
-            if (this.onoff && this.lightness == 0) {
-                this.lightness = 0.1;
-            }
         }
 
+        if (this.onoff && this.lightness == 0) {
+            this.lightness = 0.1;
+        }
+
+        this.debug(`Resulting state ${JSON.stringify({onoff:this.onoff, dim:this.lightness, light_hue:this.lightness, light_saturation:this.saturation})}`);
 
         let payload = {};
         payload.animation = "color";
@@ -101,8 +108,6 @@ class MyDevice extends Device {
         await this.setCapabilityValue("dim", this.lightness);
         await this.setCapabilityValue("light_hue", this.hue);
         await this.setCapabilityValue("light_saturation", this.saturation);
-
-
     }
 
     async publish(payload) {
