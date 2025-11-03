@@ -9,7 +9,10 @@ class MyApp extends Homey.App {
     
 
 	async onInit() {
-		this.log('MyApp has been initialized');
+
+        if (!Homey.env || !Homey.env.mqtt) {
+            throw new Error('No MQTT configuration found in environment variables. Create an env.json with the MQTT settings to enable MQTT functionality.');
+        }
 
         let options = Homey.env.mqtt;
 
