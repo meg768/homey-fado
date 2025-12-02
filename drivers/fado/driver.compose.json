@@ -3,8 +3,17 @@
         "en": "Fado"
     },
     "class": "light",
-    "capabilities": ["onoff", "dim", "light_hue", "light_saturation"],
-    "platforms": ["local"],
+    "capabilities": [
+        "onoff",
+        "dim",
+        "light_hue",
+        "light_saturation",
+        "light_temperature",
+        "light_mode"
+    ],
+    "platforms": [
+        "local"
+    ],
     "connectivity": [],
     "images": {
         "small": "{{driverAssetsPath}}/images/small.png",

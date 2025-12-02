@@ -1,122 +1,154 @@
-"use strict";
+let Color = require('color');
 
-let Color = require("color");
-
-const { Device } = require("homey");
+let { Device } = require('homey');
+let Chroma = require('chroma-js');
 
 class MyDevice extends Device {
-    async onInit() {
-        this.debug = this.log;
-        this.app = this.homey.app;
-        this.mqtt = this.app.mqtt;
-        this.onoff = false;
-        this.hue = 0;
-        this.lightness = 0.5;
-        this.saturation = 1;
+	async onInit() {
+		this.debug = this.log;
+		this.app = this.homey.app;
+		this.mqtt = this.app.mqtt;
 
-        let capabilities = ["onoff", "dim", "light_hue", "light_saturation"];
+		this.state = {};
+		this.state.onoff = false; // true/false
+		this.state.dim = 0.5; // 0..1
+		this.state.light_hue = 0.5; // 0..1
+		this.state.light_temperature = 0.5; // 0..1
+		this.state.light_saturation = 0.5; // 0..1
+		this.state.light_mode = 'color'; // 'color' or 'temperature'
 
-        this.registerMultipleCapabilityListener(capabilities, async (args) => {
-            await this.setState(args);
-        });
+		let capabilities = ['onoff', 'dim', 'light_hue', 'light_saturation', 'light_temperature', 'light_mode'];
 
-        await this.setState({ onoff: false, dim: this.lightness, light_hue: this.hue, light_saturation: this.saturation });
-    }
+		this.registerMultipleCapabilityListener(capabilities, async state => {
+			await this.setState(state);
+		});
 
-    getCurrentColor() {
-        return this.onoff ? `hsl(${this.hue * 360}, ${this.saturation * 100}%, ${this.lightness * 100}%)` : "black";
-    }
+		await this.setState(this.state);
+	}
 
-    async pulse({ color, interval, iterations }) {
-        let payload = {};
-        payload.animation = "pulse";
-        payload.color = color;
-        payload.interval = interval * 1000;
-        payload.iterations = iterations;
-        payload.priority = "!";
+	getCurrentColor() {
+		let state = { ...this.state };
 
-        await this.publish(payload);
+		let color = 'black';
 
-        payload = {};
-        payload.animation = "color";
-        payload.color = this.getCurrentColor();
-        payload.fade = 200;
-        payload.duration = -1;
+		if (state.onoff) {
+			color = `hsl(${state.light_hue * 360}, ${state.light_saturation * 100}%, ${state.dim * 100}%)`;
+		}
 
-        await this.publish(payload);
-    }
+		return color;
+	}
 
-    async blink({ color, interval, iterations }) {
-        let payload = {};
-        payload.animation = "blink";
-        payload.color = color;
-        payload.interval = interval * 1000;
-        payload.iterations = iterations;
-        payload.priority = "!";
+	async pulse({ color, interval, iterations }) {
+		let payload = {};
+		payload.animation = 'pulse';
+		payload.color = color;
+		payload.interval = interval * 1000;
+		payload.iterations = iterations;
+		payload.priority = '!';
 
-        await this.publish(payload);
+		await this.publish(payload);
 
-        payload = {};
-        payload.animation = "color";
-        payload.color = this.getCurrentColor();
-        payload.fade = 200;
-        payload.duration = -1;
+		payload = {};
+		payload.animation = 'color';
+		payload.color = this.getCurrentColor();
+		payload.fade = 200;
+		payload.duration = -1;
 
-        await this.publish(payload);
-    }
+		await this.publish(payload);
+	}
 
-    async setState(args) {
-        let { onoff, dim, light_hue, light_saturation } = args;
+	async blink({ color, interval, iterations }) {
+		let payload = {};
+		payload.animation = 'blink';
+		payload.color = color;
+		payload.interval = interval * 1000;
+		payload.iterations = iterations;
+		payload.priority = '!';
 
-        this.debug(`Setting state ${JSON.stringify(args)}`);
+		await this.publish(payload);
 
-        if (dim != undefined) {
-            onoff = dim != 0;
-        }
+		payload = {};
+		payload.animation = 'color';
+		payload.color = this.getCurrentColor();
+		payload.fade = 200;
+		payload.duration = -1;
 
-        if (dim != undefined) {
-            this.lightness = dim;
-        }
+		await this.publish(payload);
+	}
 
-        if (light_hue != undefined) {
-            this.hue = light_hue;
-        }
+	async setOnOff(value) {
+		this.state.onoff = value;
+		await this.setCapabilityValue('onoff', this.state.onoff);
+	}
 
-        if (light_saturation != undefined) {
-            this.saturation = light_saturation;
-        }
+	async setHue(value) {
+		this.state.light_hue = value;
+		await this.setCapabilityValue('light_hue', this.state.light_hue);
+	}
+	async setTemperature(value) {
+		// Convert Homey temperature (0..1) to kelvin
+		this.state.light_temperature = value;
+		await this.setCapabilityValue('light_temperature', this.state.light_temperature);
+	}
+	async setMode(value) {
+		// Convert existing color to new mode
+		this.state.light_mode = value;
+		await this.setCapabilityValue('light_mode', this.state.light_mode);
+	}
+	async setState(args) {
+		this.debug(`Setting state ${JSON.stringify(args)}`);
 
-        if (onoff != undefined) {
-            this.onoff = onoff;
-        }
+		let state = { ...args };
 
-        if (this.onoff && this.lightness == 0) {
-            this.lightness = 0.1;
-        }
+		// If changing to color mode, derive hue/sat from temperature
+		if (state.light_temperature != undefined) {
+			let hsl = Chroma.temperature(2000 + (1 - state.light_temperature) * 4000).hsl();
+			state.light_hue = hsl[0] / 360;
+			state.light_saturation = hsl[1];
+			state.dim = hsl[2];
+		}
 
-        this.debug(`Resulting state ${JSON.stringify({onoff:this.onoff, dim:this.lightness, light_hue:this.lightness, light_saturation:this.saturation})}`);
 
-        let payload = {};
-        payload.animation = "color";
-        payload.priority = "!";
-        payload.color = this.getCurrentColor();
-        payload.duration = -1;
+		if (state.onoff != undefined && this.state.onoff != state.onoff) {
+			await this.setCapabilityValue('onoff', state.onoff);
+		}
+		if (state.dim != undefined && this.state.dim != state.dim) {
+			await this.setCapabilityValue('dim', state.dim);
+		}
+		if (state.light_hue != undefined && this.state.light_hue != state.light_hue) {
+			await this.setCapabilityValue('light_hue', state.light_hue);
+		}
+		if (state.light_saturation != undefined && this.state.light_saturation != state.light_saturation) {
+			await this.setCapabilityValue('light_saturation', state.light_saturation);
+		}
+		if (state.light_mode != undefined && this.state.light_mode != state.light_mode) {
+			await this.setCapabilityValue('light_mode', state.light_mode);
+		}
+		if (state.light_temperature != undefined && this.state.light_temperature != state.light_temperature) {
+			await this.setCapabilityValue('light_temperature', state.light_temperature);
+		}
 
-        await this.publish(payload);
+        // Remember new state
+		this.state = { ...this.state, ...state };
 
-        await this.setCapabilityValue("onoff", this.onoff);
-        await this.setCapabilityValue("dim", this.lightness);
-        await this.setCapabilityValue("light_hue", this.hue);
-        await this.setCapabilityValue("light_saturation", this.saturation);
-    }
+        // Publish new state to device
+		let payload = {};
+		payload.animation = 'color';
+		payload.priority = '!';
+		payload.color = this.getCurrentColor();
+		payload.duration = -1;
 
-    async publish(payload) {
-        await this.mqtt.publish(`${this.getSetting("mqtt").topic}`, JSON.stringify(payload), { retain: true });
-    }
+		await this.publish(payload);
 
-    async onUninit() {
-        await this.homey.app.unregisterDevice(this);
-    }
+	}
+
+	async publish(payload) {
+		await this.mqtt.publish(`${this.getSetting('mqtt').topic}`, JSON.stringify(payload), { retain: true });
+	}
+
+	async onUninit() {
+		await this.homey.app.unregisterDevice(this);
+	}
 }
 
 module.exports = MyDevice;
